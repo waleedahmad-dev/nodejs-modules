@@ -11,14 +11,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendEmail = async ({ to, subject, html }) => {
+module.exports = async ({ to, subject, html }) => {
   const mailOptions = {
     from: config.email.from,
     to,
     subject,
     html,
   };
-
   try {
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully');
@@ -28,5 +27,3 @@ const sendEmail = async ({ to, subject, html }) => {
     return false;
   }
 };
-
-module.exports = sendEmail;
