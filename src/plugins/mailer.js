@@ -1,5 +1,5 @@
-const nodemailer = require("nodemailer");
-const config = require("../config");
+const nodemailer = require('nodemailer');
+const config = require('../config');
 
 const transporter = nodemailer.createTransport({
   host: config.email.smtp.host,
@@ -21,10 +21,10 @@ const sendEmail = async ({ to, subject, html }) => {
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully");
+    console.log('Email sent successfully');
     return true;
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error('Error sending email:', error);
     return false;
   }
 };

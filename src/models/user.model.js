@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { USER_ROLES_ARRAY, USER_ROLES } = require("../config/contants");
+const mongoose = require('mongoose');
+const { USER_ROLES_ARRAY, USER_ROLES } = require('../config/contants');
 
 const user = new mongoose.Schema(
   {
@@ -31,6 +31,6 @@ const user = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model("User", user, "users");
+const User = mongoose.model('User', user, 'users');
 
 module.exports = User;

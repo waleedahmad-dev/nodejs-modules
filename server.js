@@ -1,7 +1,7 @@
-const app = require("./src/app");
-const http = require("http");
+const app = require('./src/app');
+const http = require('http');
 const server = http.createServer(app);
-const config = require("./src/config");
+const config = require('./src/config');
 
 // Start the server
 server.listen(config.port, () => {

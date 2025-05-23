@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+const User = require('../models/user.model');
 
 module.exports = {
   async createUser(userData) {
@@ -29,13 +29,13 @@ module.exports = {
       pages: Math.ceil(total / limit),
     };
   },
-  async searchUsers(searchString = "", { page = 1, limit = 10 } = {}) {
+  async searchUsers(searchString = '', { page = 1, limit = 10 } = {}) {
     const skip = (page - 1) * limit;
     const query = searchString
       ? {
           $or: [
-            { name: { $regex: searchString, $options: "i" } },
-            { email: { $regex: searchString, $options: "i" } },
+            { name: { $regex: searchString, $options: 'i' } },
+            { email: { $regex: searchString, $options: 'i' } },
             // Add more fields here if needed
           ],
         }
@@ -52,7 +52,7 @@ module.exports = {
   async updateUserPassword(id, newPassword, salt) {
     return await User.findByIdAndUpdate(
       id,
-      { password: newPassword },
+      { password: newPassword, salt },
       { new: true }
     );
   },

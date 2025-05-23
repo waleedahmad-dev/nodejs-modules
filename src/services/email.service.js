@@ -1,11 +1,11 @@
-const genForgot = require("../email/forgot-password");
-const config = require("../config");
-const sendMail = require("../plugins/mailer");
+const genForgot = require('../email/forgot-password');
+const config = require('../config');
+const sendMail = require('../plugins/mailer');
 module.exports = {
   sendForgotPasswordEmail: async (email, link, name) => {
     try {
       const emailContent = genForgot({ email, link, name });
-      const subject = "Reset Your Password";
+      const subject = 'Reset Your Password';
       const to = email;
       const from = config.email.from;
       const html = emailContent;
@@ -19,7 +19,7 @@ module.exports = {
 
       if (!result || result.error) {
         throw new Error(
-          result?.error || "Unknown error occurred while sending email"
+          result?.error || 'Unknown error occurred while sending email'
         );
       }
 

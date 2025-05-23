@@ -1,5 +1,5 @@
-const authService = require("../services/auth.service");
-const authValidation = require("../validation/auth.validation");
+const authService = require('../services/auth.service');
+const authValidation = require('../validation/auth.validation');
 module.exports = {
   login: async (req, res) => {
     try {
@@ -10,9 +10,9 @@ module.exports = {
       }
       const user = await authService.loginUser(email, password);
       if (!user) {
-        return res.status(401).json({ message: "Invalid credentials" });
+        return res.status(401).json({ message: 'Invalid credentials' });
       }
-      return res.status(200).json({ message: "Login successful", user });
+      return res.status(200).json({ message: 'Login successful', user });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
@@ -34,7 +34,7 @@ module.exports = {
 
       return res
         .status(201)
-        .json({ message: "User created successfully", newUser });
+        .json({ message: 'User created successfully', newUser });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
@@ -48,9 +48,9 @@ module.exports = {
       }
       const result = await authService.forgotPassword(email);
       if (!result) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: 'User not found' });
       }
-      return res.status(200).json({ message: "Password reset link sent" });
+      return res.status(200).json({ message: 'Password reset link sent' });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
@@ -64,9 +64,9 @@ module.exports = {
       }
       const result = await authService.resetPassword(req.user, newPassword);
       if (!result) {
-        return res.status(404).json({ message: "Password Reset Failed" });
+        return res.status(404).json({ message: 'Password Reset Failed' });
       }
-      return res.status(200).json({ message: "Password reset successful" });
+      return res.status(200).json({ message: 'Password reset successful' });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }

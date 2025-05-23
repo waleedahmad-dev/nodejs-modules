@@ -1,6 +1,6 @@
-const bcrypt = require("bcrypt");
-const Jwt = require("jsonwebtoken");
-const config = require("../config");
+const bcrypt = require('bcrypt');
+const Jwt = require('jsonwebtoken');
+const config = require('../config');
 
 const hashPassword = async () => {
   const saltRounds = 10;
@@ -35,6 +35,7 @@ const verifyToken = (token) => {
     const decoded = Jwt.verify(token, config.jwt.secret);
     return decoded;
   } catch (error) {
+    console.log('Token verification failed:', error);
     return null;
   }
 };
