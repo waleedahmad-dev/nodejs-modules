@@ -6,10 +6,10 @@ const authValidationSchema = joi.object({
 });
 
 const signUpValidationSchema = joi.object({
-  firstName: joi.string().min(2).max(30).required(),
-  lastName: joi.string().min(2).max(30).required(),
+  user_name: joi.string().min(2).max(30).required(),
   email: joi.string().email().required(),
   password: joi.string().min(6).max(20).required(),
+  role: joi.string().required(),
 });
 
 const forgotPasswordValidationSchema = joi.object({

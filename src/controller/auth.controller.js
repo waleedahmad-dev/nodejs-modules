@@ -1,10 +1,11 @@
+const logger = require('../config/logger');
 const authService = require('../services/auth.service');
 const authValidation = require('../validation/auth.validation');
 module.exports = {
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
-      const { error } = authValidation.validateLogin(req.body);
+      const error = authValidation.validateLogin(req.body);
       if (error) {
         return res.status(400).json({ message: error.details[0].message });
       }
@@ -14,35 +15,35 @@ module.exports = {
       }
       return res.status(200).json({ message: 'Login successful', user });
     } catch (error) {
+      logger.error('Login error:', JSON.stringify(error.message));
       return res.status(500).json({ message: error.message });
     }
   },
 
   signUp: async (req, res) => {
     try {
-      const { firstName, lastName, email, password } = req.body;
-      const { error } = authValidation.validateSignUp(req.body);
+      const { user_name, email, password, role } = req.body;
+      const error = authValidation.validateSignUp(req.body);
       if (error) {
         return res.status(400).json({ message: error.details[0].message });
       }
-      const newUser = await authService.registerUser(
-        firstName,
-        lastName,
+      await authService.registerUser({
+        user_name,
         email,
-        password
-      );
+        password,
+        role,
+      });
 
-      return res
-        .status(201)
-        .json({ message: 'User created successfully', newUser });
+      return res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
+      logger.error('Login error:', JSON.stringify(error.message));
       return res.status(500).json({ message: error.message });
     }
   },
   forgotPassword: async (req, res) => {
     try {
       const { email } = req.body;
-      const { error } = authValidation.validateForgotPassword(req.body);
+      const error = authValidation.validateForgotPassword(req.body);
       if (error) {
         return res.status(400).json({ message: error.message });
       }
@@ -58,7 +59,7 @@ module.exports = {
   resetPassword: async (req, res) => {
     try {
       const { newPassword } = req.body;
-      const { error } = authValidation.validateResetPassword(req.body);
+      const error = authValidation.validateResetPassword(req.body);
       if (error) {
         return res.status(400).json({ message: error.details[0].message });
       }

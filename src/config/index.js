@@ -10,6 +10,7 @@ const envVarsSchema = Joi.object()
     NODE_ENV: Joi.string()
       .valid('production', 'development', 'test')
       .required(),
+    ADMIN_EMAIL: Joi.string().required().description('Admin email address'),
     PORT: Joi.number().default(3000),
     MONGODB_URL: Joi.string().required().description('Mongo DB url'),
     JWT_SECRET: Joi.string().required().description('JWT secret key'),
@@ -48,6 +49,7 @@ module.exports = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
   frontend_origin: envVars.FRONTEND_ORIGINS,
+  admin_email: envVars.ADMIN_EMAIL,
   mongoose: {
     url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),
     options: {},

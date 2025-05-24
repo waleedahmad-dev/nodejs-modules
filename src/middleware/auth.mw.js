@@ -1,9 +1,11 @@
 const UserService = require('../services/user.service');
 const cryptoService = require('../services/crypto.service');
+const logger = require('../config/logger');
 
 module.exports = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
+    logger.info('authHeader', authHeader);
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({ message: 'No token provided' });
     }

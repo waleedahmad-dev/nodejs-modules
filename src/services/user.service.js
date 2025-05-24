@@ -15,7 +15,9 @@ module.exports = {
   },
 
   async findUserByEmail(email) {
-    return await User.findOne({ email });
+    return await User.findOne({ email })
+      .populate('role')
+      .populate('role.permissions');
   },
 
   async findAllUsers({ page = 1, limit = 10 } = {}) {
