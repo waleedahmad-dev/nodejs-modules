@@ -7,7 +7,7 @@ const rateLimit = require('./plugins/rate-limiter');
 const app = express();
 const path = require('path');
 const logger = require('./config/logger');
-const routesV1 = require('./routes/v1.routes');
+const routesV1 = require('./routes/v1/');
 const welcome = require('./routes/welcome.routes');
 // start database connection
 database();

@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const Jwt = require('jsonwebtoken');
 const config = require('../config');
-const logger = require('../config/logger');
 
 const hashPassword = async () => {
   const saltRounds = 10;
@@ -23,7 +22,6 @@ const generateToken = (user) => {
     {
       id: user._id,
       email: user.email,
-      role: user.role,
     },
     config.jwt.secret,
     { expiresIn: `${config.jwt.accessExpirationMinutes}m` }
@@ -48,7 +46,7 @@ const verifyToken = (token) => {
     const decoded = Jwt.verify(token, config.jwt.secret);
     return decoded;
   } catch (error) {
-    logger.error('Token verification failed:', error.message);
+    console.error('Token verification failed:', error.message);
     return null;
   }
 };

@@ -1,6 +1,5 @@
 const Role = require('../src/models/roles.model');
-const { USER_ROLES } = require('../src/config/contants');
-const Permission = require('../src/models/permissions.model');
+const { USER_ROLES, PERMISSIONS_ARRAY } = require('../src/config/contants');
 
 module.exports = async () => {
   try {
@@ -10,9 +9,9 @@ module.exports = async () => {
         const role = new Role({ name: roleName });
         await role.save();
         console.log(`Role "${roleName}" seeded`);
-        const permissions = await Permission.find();
-        const permissionIds = permissions.map((permission) => permission._id);
-        role.permissions = permissionIds;
+        const permissions = PERMISSIONS_ARRAY;
+
+        role.permissions = permissions;
         await role.save();
         console.log(`Permissions assigned to role "${roleName}"`);
       } else {

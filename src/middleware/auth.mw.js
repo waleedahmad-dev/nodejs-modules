@@ -1,11 +1,10 @@
 const UserService = require('../services/user.service');
 const cryptoService = require('../services/crypto.service');
-const logger = require('../config/logger');
 
 module.exports = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
-    logger.info('authHeader', authHeader);
+    console.log('authHeader', authHeader);
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({ message: 'No token provided' });
     }
@@ -16,7 +15,7 @@ module.exports = async (req, res, next) => {
       return res.status(401).json({ message: 'Invalid token' });
     }
 
-    const user = await UserService.findUserById(payload.id);
+    const user = await UserService.findUserByIdWithRole(payload.id);
     if (!user) {
       return res.status(401).json({ message: 'User not found' });
     }

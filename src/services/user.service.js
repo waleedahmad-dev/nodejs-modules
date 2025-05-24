@@ -13,7 +13,9 @@ module.exports = {
   async findUserById(userId) {
     return await User.findById(userId);
   },
-
+  async findUserByIdWithRole(userId) {
+    return await User.findById(userId).populate('role');
+  },
   async findUserByEmail(email) {
     return await User.findOne({ email })
       .populate('role')

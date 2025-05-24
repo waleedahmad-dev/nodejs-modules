@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Permission = require('./permissions.model');
+
 const roles = new mongoose.Schema(
   {
     name: {
@@ -9,8 +9,7 @@ const roles = new mongoose.Schema(
     },
     permissions: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: Permission,
+        type: String,
       },
     ],
   },
