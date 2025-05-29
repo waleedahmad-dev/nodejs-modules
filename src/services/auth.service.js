@@ -2,8 +2,10 @@ const cryptoService = require('../services/crypto.service');
 const userServices = require('../services/user.service');
 const emailService = require('../services/email.service');
 const config = require('../config');
+
 module.exports = {
   registerUser: async (userData) => {
+    console.log('userData', userData);
     const { email, password } = userData;
     const existingUser = await userServices.findUserByEmail(email);
     if (existingUser) {
@@ -42,7 +44,8 @@ module.exports = {
     if (!user) {
       throw new Error('User not found');
     }
-    const token = cryptoService.generateToken(user, '1h');
+    const token = cryptoService.generateForgotPasswordToken(user);
+    console.log('token', token);
     const { FRONTEND_URL } = config.frontend_origin;
     const link = `${FRONTEND_URL}/reset-password/${token}`;
     // Send email with the link

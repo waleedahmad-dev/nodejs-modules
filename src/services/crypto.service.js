@@ -22,10 +22,21 @@ const generateToken = (user) => {
     {
       id: user._id,
       email: user.email,
-      role: user.role,
     },
     config.jwt.secret,
-    { expiresIn: config.jwt.accessExpirationMinutes }
+    { expiresIn: `${config.jwt.accessExpirationMinutes}m` }
+  );
+  return token;
+};
+
+const generateForgotPasswordToken = (user) => {
+  const token = Jwt.sign(
+    {
+      id: user._id,
+      email: user.email,
+    },
+    config.jwt.secret,
+    { expiresIn: `${config.jwt.resetPasswordExpirationMinutes}m` }
   );
   return token;
 };
@@ -35,7 +46,7 @@ const verifyToken = (token) => {
     const decoded = Jwt.verify(token, config.jwt.secret);
     return decoded;
   } catch (error) {
-    console.log('Token verification failed:', error);
+    console.error('Token verification failed:', error.message);
     return null;
   }
 };
@@ -46,4 +57,5 @@ module.exports = {
   comparePassword,
   generateToken,
   verifyToken,
+  generateForgotPasswordToken,
 };

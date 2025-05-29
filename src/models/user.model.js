@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { USER_ROLES_ARRAY, USER_ROLES } = require('../config/contants');
+const Role = require('./roles.model');
 
 const user = new mongoose.Schema(
   {
@@ -17,9 +17,9 @@ const user = new mongoose.Schema(
       required: true,
     },
     role: {
-      type: String,
-      enum: USER_ROLES_ARRAY,
-      default: USER_ROLES.USER,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: Role,
+      required: true,
     },
     salt: {
       type: String,
