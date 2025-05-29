@@ -44,7 +44,9 @@ module.exports = {
           ],
         }
       : {};
-    const users = await User.find(query).skip(skip).limit(limit);
+    const users = await User.find(query, { password: 0, salt: 0 })
+      .skip(skip)
+      .limit(limit);
     const total = await User.countDocuments(query);
     return {
       users,
@@ -59,5 +61,8 @@ module.exports = {
       { password: newPassword, salt },
       { new: true }
     );
+  },
+  async deleteUser(userId) {
+    return await User.findByIdAndDelete(userId);
   },
 };

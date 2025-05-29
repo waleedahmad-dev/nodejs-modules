@@ -13,7 +13,9 @@ module.exports = {
   },
   getUserById: async (req, res) => {
     try {
-      const user = await userService.getUserById(req.params.id);
+      const findUser = await userService.findUserById(req.params.id);
+      // eslint-disable-next-line no-unused-vars
+      const { password: _password, salt, ...user } = findUser.toObject();
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
@@ -47,7 +49,10 @@ module.exports = {
   },
   getAllUsers: async (req, res) => {
     try {
-      const users = await userService.getAllUsers();
+      const users = await userService.searchUsers(req.query.search, {
+        page: parseInt(req.query.page) || 1,
+        limit: parseInt(req.query.page) || 10,
+      });
       res.status(200).json(users);
     } catch (error) {
       res.status(400).json({ error: error.message });
