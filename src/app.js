@@ -9,6 +9,8 @@ const path = require('path');
 const logger = require('./config/logger');
 const routesV1 = require('./routes/v1/');
 const welcome = require('./routes/welcome.routes');
+const responseInterceptor = require('./middleware/response.mw');
+const config = require('./config');
 // start database connection
 database();
 // Set up global error handler
@@ -16,13 +18,24 @@ app.use((req, res, next, err) => {
   logger.error(`Global Error Handler: ${err.message}`);
   res.status(500).json({ message: 'Internal Server Error' });
 });
-console.log = (...args) => logger.info(args.join(' '));
-console.error = (...args) => logger.error(args.join(' '));
-console.warn = (...args) => logger.warn(args.join(' '));
+
+if (config.env === 'development') {
+  console.log = (...args) => logger.info(args.join(' '));
+  console.error = (...args) => logger.error(args.join(' '));
+  console.warn = (...args) => logger.warn(args.join(' '));
+} else {
+  console.log = () => {};
+  console.error = () => {};
+  console.warn = () => {};
+}
+// Set up global request logging
+
 // Middleware
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(responseInterceptor);
+
 app.use(express.urlencoded({ extended: true }));
 // Rate limiting
 app.use(rateLimit);
